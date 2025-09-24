@@ -12,6 +12,7 @@ echo "#step-3 \t Building project"
 npm run build
 
 echo "#step-4 \t uploading the build server"
+
 mc alias set minio http://minio:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
 # check if it does not exist and create if not yaaa
 mc mb -p minio/amazon
