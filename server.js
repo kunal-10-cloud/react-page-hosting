@@ -1,5 +1,15 @@
 const express = require("express")
 const exce = require("child_process").exec
+const cors = require("cors")
+
+// enable cors for all origins
+const corsOptions = {
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+};
+
+app.use(cors(corsOptions))
 
 const app = express()
 
@@ -38,6 +48,13 @@ app.post('/deploy', (res , req) => {
   })
 })
 
+app.get('/web/:id', (req, res) => {
+  const jobId = req.params.id;
+  console.log("Web request for job ID:", jobId);
+
+  const filePath = `/amazon/${jobId}/dist/index.html`;
+
+});
 
 // any get request to any route
 app.get("*", (req, res) => {
