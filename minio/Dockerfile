@@ -4,7 +4,7 @@ FROM quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
 RUN apk add --no-cache nginx bash gettext
 
 # Copy Nginx template (with $PORT)
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy entrypoint script
 COPY start.sh /start.sh
