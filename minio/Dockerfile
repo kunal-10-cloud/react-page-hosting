@@ -14,4 +14,4 @@ ENV MINIO_CONSOLE_ADDRESS=":${PORT}"
 EXPOSE 9001
 
 # Start MinIO server
-CMD ["sh", "-c", "minio server /data --address $MINIO_ADDRESS --console-address $MINIO_CONSOLE_ADDRESS"]
+CMD ["minio server /data --address $MINIO_ADDRESS --console-address $MINIO_CONSOLE_ADDRESS"]
