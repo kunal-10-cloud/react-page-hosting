@@ -8,5 +8,4 @@ ENV MINIO_CONSOLE_ADDRESS=":${PORT}"
 # Expose API and console ports
 EXPOSE 9000
 
-# Run MinIO server with console on custom port
-CMD ["server", "/data", "--console-address", ":${PORT}"]
+CMD sh -c "minio server /data --console-address :${PORT}"
