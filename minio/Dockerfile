@@ -1,28 +1,25 @@
-# Stage 1: MinIO
-FROM quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z AS minio
+FROM quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
 
-# Stage 2: Nginx
-FROM nginx:alpine
+# Install Nginx and envsubst
+RUN apk add --no-cache nginx bash gettext
 
-# Install bash for any scripting if needed
-RUN apk add --no-cache bash
+# Copy Nginx template (with $PORT)
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
 
-# Copy custom Nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy MinIO binary from first stage
-COPY --from=minio /usr/bin/minio /usr/bin/minio
+# Copy entrypoint script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 # MinIO credentials
 ENV MINIO_ROOT_USER=admin
 ENV MINIO_ROOT_PASSWORD=password
 
-# Internal ports for MinIO
-ENV MINIO_ADDRESS=":9001"
-ENV MINIO_CONSOLE_ADDRESS=":9002"
+# Internal ports
+ENV MINIO_ADDRESS=":9000"
+ENV MINIO_CONSOLE_ADDRESS=":9001"
 
-# Expose internal API port (Console is proxied)
-EXPOSE 9001 9002
+# Expose internal ports
+EXPOSE 9000 9001
 
-# Start both MinIO and Nginx (no 'sh -c', just a bash script is OK)
-CMD ["bash", "-c", "minio server /data --address :9001 --console-address :9002 & nginx -g 'daemon off;'"]
+# Start both MinIO and Nginx via script
+CMD ["/start.sh"]
