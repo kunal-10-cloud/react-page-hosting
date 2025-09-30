@@ -1,7 +1,12 @@
 FROM quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
 
 # Install Nginx and envsubst
-RUN apk add --no-cache nginx bash gettext
+USER root
+RUN apt-get update && apt-get install -y \
+    nginx \
+    bash \
+    gettext-base \
+ && rm -rf /var/lib/apt/lists/*
 
 # Copy Nginx template (with $PORT)
 COPY nginx.conf /etc/nginx/nginx.conf
