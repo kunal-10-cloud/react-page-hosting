@@ -1,17 +1,28 @@
-# Use official MinIO image
-FROM quay.io/minio/minio
+# Stage 1: MinIO
+FROM quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z AS minio
 
-# Set environment variables (credentials)
+# Stage 2: Nginx
+FROM nginx:alpine
+
+# Install bash for any scripting if needed
+RUN apk add --no-cache bash
+
+# Copy custom Nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy MinIO binary from first stage
+COPY --from=minio /usr/bin/minio /usr/bin/minio
+
+# MinIO credentials
 ENV MINIO_ROOT_USER=admin
 ENV MINIO_ROOT_PASSWORD=password
 
-# Render assigns PORT dynamically, so MinIO Console must bind to it
-# MinIO API port is kept internal as 9001 (optional)
+# Internal ports for MinIO
 ENV MINIO_ADDRESS=":9001"
-ENV MINIO_CONSOLE_ADDRESS=":${PORT}"
+ENV MINIO_CONSOLE_ADDRESS=":9002"
 
-# Expose only internal API port (Render will auto-expose $PORT)
-EXPOSE 9001
+# Expose internal API port (Console is proxied)
+EXPOSE 9001 9002
 
-# Start MinIO server
-CMD ["minio server /data --address $MINIO_ADDRESS --console-address $MINIO_CONSOLE_ADDRESS"]
+# Start both MinIO and Nginx (no 'sh -c', just a bash script is OK)
+CMD ["bash", "-c", "minio server /data --address :9001 --console-address :9002 & nginx -g 'daemon off;'"]
