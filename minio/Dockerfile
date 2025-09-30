@@ -5,8 +5,13 @@ FROM quay.io/minio/minio
 ENV MINIO_ROOT_USER=admin
 ENV MINIO_ROOT_PASSWORD=password
 
-# Expose MinIO ports
-EXPOSE 9000 9090
+# Render assigns PORT dynamically, so MinIO Console must bind to it
+# MinIO API port is kept internal as 9001 (optional)
+ENV MINIO_ADDRESS=":9001"
+ENV MINIO_CONSOLE_ADDRESS=":${PORT}"
 
-# Start MinIO server and console
-CMD ["server", "/data", "--console-address", ":9090"]
+# Expose only internal API port (Render will auto-expose $PORT)
+EXPOSE 9001
+
+# Start MinIO server
+CMD ["sh", "-c", "minio server /data --address $MINIO_ADDRESS --console-address $MINIO_CONSOLE_ADDRESS"]
