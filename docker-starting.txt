@@ -21,3 +21,5 @@ docker run --rm --link minio \
   -e MINIO_ACCESS_KEY=admin \
   -e MINIO_SECRET_KEY=password \
   demoimage
+
+apanel 
