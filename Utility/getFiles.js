@@ -29,7 +29,9 @@ const minioClient = new Client({
 // });
 
 // Serve HTML file from MinIO
-app.get('/view/:folder/:file', async (req, res) => {
+// app.get('/view/:folder/:file', async (req, res) => {
+app.get('/view/', async (req, res) => {
+
   const bucketName = 'amazon';
   //   const filePath = `${req.params.folder}/${req.params.file}`; // e.g. job-123/dist/index.html
   const filePath = "job-123/dist/index.html"
@@ -39,7 +41,15 @@ app.get('/view/:folder/:file', async (req, res) => {
     const objStream = await minioClient.getObject(bucketName, filePath);
 
     res.setHeader('Content-Type', 'text/html');
+
+    objStream.on('error', (err) => {
+      console.error('Stream error:', err);
+      if (!res.headersSent) res.status(500).send('Error while streaming file');
+    });
+
     objStream.pipe(res);
+
+
     console.log("File served successfully");
   } catch (err) {
     console.error(err);

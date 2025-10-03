@@ -1,0 +1,10 @@
+for vite:
+    base: './', // <-- important for relative asset paths
+    
+    this should be in the vite.config.json
+
+    <BrowserRouter basename='/development/temp/dist-2/dist'>
+
+
+
+npm run build -- --base=./
