@@ -1,0 +1,17 @@
+# Use a lightweight Node image (Alpine-based)
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install git, curl and download MinIO client (mc)
+RUN apk add --no-cache git curl && \
+    curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc && \
+    chmod +x /usr/local/bin/mc
+
+# Copy and make the build script executable
+COPY build.sh /app/build.sh
+RUN chmod +x /app/build.sh
+
+# Set entrypoint
+ENTRYPOINT ["/app/build.sh"]
