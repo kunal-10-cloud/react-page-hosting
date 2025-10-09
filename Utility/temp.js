@@ -24,20 +24,20 @@ const client = new Minio.Client({
 });
 
 // Example: list buckets to verify connection (like `mc ls`)
-async function createBucket() {
-  try {
-    await client.makeBucket('somthing', 'us-east-1'); // region required
-    console.log('Bucket "somthing" created successfully.');
-  } catch (err) {
-    if (err.code === 'BucketAlreadyOwnedByYou') {
-      console.log('Bucket "somthing" already exists.');
-    } else {
-      console.error('Error creating bucket:', err);
-    }
-  }
-}
+// async function createBucket() {
+//   try {
+//     await client.makeBucket('somthing', 'us-east-1'); // region required
+//     console.log('Bucket "somthing" created successfully.');
+//   } catch (err) {
+//     if (err.code === 'BucketAlreadyOwnedByYou') {
+//       console.log('Bucket "somthing" already exists.');
+//     } else {
+//       console.error('Error creating bucket:', err);
+//     }
+//   }
+// }
 
-createBucket();
+// createBucket();
 
 
 async function listBuckets() {
