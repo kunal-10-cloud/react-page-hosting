@@ -4,13 +4,11 @@ const Minio = require('minio');
 const router = express.Router();
 
 
-
 // MinIO client configuration
 const aliasName = process.env.MINIO_ALIAS || 'tempcontainer';
-const endpointUrl = 'https://tempcontainer.onrender.com';
-const accessKey = 'admin';
-const secretKey = 'password';
-
+const endpointUrl = process.env.STORAGE_ENDPOINT || 'https://tempcontainer.onrender.com';
+const accessKey = process.env.STORAGE_ACCESS_KEY || 'admin';
+const secretKey = process.env.STORAGE_SECRET_KEY || 'password';
 
 // parse endpoint
 const u = new URL(endpointUrl);
@@ -53,3 +51,6 @@ router.get('/:id', async (req, res) => {
         res.status(404).send('File not found');
     }
 });
+
+
+module.exports = router;

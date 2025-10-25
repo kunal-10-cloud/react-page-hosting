@@ -5,13 +5,13 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Install git, curl and download MinIO client (mc)
-RUN apk add --no-cache git curl && \
-    curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc && \
-    chmod +x /usr/local/bin/mc
+RUN apk add --no-cache git curl bash dos2unix \
+    && curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc \
+    && chmod +x /usr/local/bin/mc
 
-# Copy and make the build script executable
+# Copy build script and convert line endings to Unix (LF)
 COPY build.sh /app/build.sh
-RUN chmod +x /app/build.sh
+RUN dos2unix /app/build.sh && chmod +x /app/build.sh
 
 # Set entrypoint
 ENTRYPOINT ["/app/build.sh"]

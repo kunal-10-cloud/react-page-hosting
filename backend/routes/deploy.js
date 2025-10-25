@@ -1,6 +1,6 @@
-import express from "express";
-import { DefaultAzureCredential } from "@azure/identity";
-import { ContainerAppsAPIClient } from "@azure/arm-appcontainers";
+const express = require("express");
+const { DefaultAzureCredential } = require("@azure/identity");
+const { ContainerAppsAPIClient } = require("@azure/arm-appcontainers");
 
 const router = express.Router();
 
