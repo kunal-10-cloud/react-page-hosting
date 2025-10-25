@@ -1,17 +1,39 @@
 const express = require('express');
-const { Client } = require('minio');
+const Minio = require('minio');
 
 const app = express();
-const port = 3000;
+// const port = 3000;
 
-const minioClient = new Client({
-  endPoint: 'localhost',
-  port: 9000,
-  useSSL: false,
-  accessKey: 'admin',
-  secretKey: 'password'
+// const minioClient = new Client({
+//   endPoint: 'localhost',
+//   port: 9000,
+//   useSSL: false,
+//   accessKey: 'admin',
+//   secretKey: 'password'
+// });
+
+
+const aliasName = 'tempcontainer';
+const endpointUrl = 'https://tempcontainer.onrender.com';
+const accessKey = 'admin';
+const secretKey = 'password';
+
+// parse endpoint
+const u = new URL(endpointUrl);
+const useSSL = u.protocol === 'https:';
+const host = u.hostname;
+const port = u.port ? parseInt(u.port, 10) : (useSSL ? 443 : 80);
+
+// create client (this is your "alias" as a JS object)
+const client = new Minio.Client({
+  endPoint: host,
+  port: 443,
+  useSSL: useSSL,
+  accessKey: accessKey,
+  secretKey: secretKey
 });
 
+const minioClient = client;
 
 // app.get('/file/:fileid', async (req, res) => {
 //   const bucketName = 'your-bucket-name';
@@ -30,11 +52,12 @@ const minioClient = new Client({
 
 // Serve HTML file from MinIO
 // app.get('/view/:folder/:file', async (req, res) => {
-app.get('/view/', async (req, res) => {
+app.get('/view/:id', async (req, res) => {
 
   const bucketName = 'amazon';
   //   const filePath = `${req.params.folder}/${req.params.file}`; // e.g. job-123/dist/index.html
-  const filePath = "job-123/dist/index.html"
+  const filePath = req.params.id + '/dist/index.html'; // e.g. proj-1760673962859/dist/index.html
+  console.log("Requested file path:", filePath);
 
 
   try {
@@ -56,9 +79,11 @@ app.get('/view/', async (req, res) => {
     res.status(404).send('File not found');
   }
 });
+
+
 app.get('/assets/:id', async (req, res) => {
   const bucketName = 'amazon';
-  const filePath = `job-123/dist/assets/${req.params.id}`; // <-- interpolate the id
+  const filePath = `proj-1760862115456/dist/assets/${req.params.id}`; // <-- interpolate the id
 
   try {
     const objStream = await minioClient.getObject(bucketName, filePath);
@@ -82,6 +107,9 @@ app.get('/assets/:id', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(5000, (err) => {
+  if (err) {
+    return console.log('Something bad happened', err);
+  }
+  console.log(`Server running at http://localhost:${3000}`);
 });

@@ -4,14 +4,18 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@azure/arm-appcontainers": "^2.2.0",
+    "@azure/identity": "^4.13.0",
     "express": "^5.1.0",
     "minio": "^8.0.6",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
   }
 }

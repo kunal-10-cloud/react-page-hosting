@@ -1,6 +1,14 @@
 # folders to ignore
 node_modules/
 development/
+tmeporary/
 
 # build file to ignore
 package-lock.json
+
+
+
+# file to ignore
+.env 
+.temp
+temp.md

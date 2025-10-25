@@ -7,11 +7,15 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "@azure/arm-appcontainers": "^2.2.0",
     "@azure/identity": "^4.13.0",
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "minio": "^8.0.6"
   }
 }
