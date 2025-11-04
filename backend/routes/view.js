@@ -1,20 +1,20 @@
-const express = require('express');
-const Minio = require('minio');
+const express = require("express");
+const Minio = require("minio");
 
 const router = express.Router();
 
-
 // MinIO client configuration
-const aliasName = process.env.MINIO_ALIAS || 'tempcontainer';
-const endpointUrl = process.env.STORAGE_ENDPOINT || 'https://tempcontainer.onrender.com';
-const accessKey = process.env.STORAGE_ACCESS_KEY || 'admin';
-const secretKey = process.env.STORAGE_SECRET_KEY || 'password';
+const aliasName = process.env.MINIO_ALIAS || "tempcontainer";
+const endpointUrl =
+  process.env.STORAGE_ENDPOINT_MINIO || "https://tempcontainer.onrender.com";
+const accessKey = process.env.STORAGE_ACCESS_KEY || "admin";
+const secretKey = process.env.STORAGE_SECRET_KEY || "password";
 
 // parse endpoint
 const u = new URL(endpointUrl);
-const useSSL = u.protocol === 'https:';
+const useSSL = u.protocol === "https:";
 const host = u.hostname;
-const port = u.port ? parseInt(u.port, 10) : (useSSL ? 443 : 80);
+const port = u.port ? parseInt(u.port, 10) : useSSL ? 443 : 80;
 
 // create client
 const minioClient = new Minio.Client({
@@ -22,35 +22,58 @@ const minioClient = new Minio.Client({
   port: port,
   useSSL: useSSL,
   accessKey: accessKey,
-  secretKey: secretKey
+  secretKey: secretKey,
 });
 
 // Serve HTML file from MinIO
-router.get('/:id', async (req, res) => {
-    // to add-get bucket name form the locations
-    const bucketName = 'amazon';
-    const filePath = req.params.id + '/dist/index.html'; // e.g. proj-1760673962859/dist/index.html
-    console.log("Requested file path:", filePath);
+router.use(async (req, res) => {
+  const parts = req.path.split("/").filter(Boolean);
+  const id = parts.slice(0).join("/") || "root";
+  console.log("Received request for project ID:", req.params.id);
+  console.log(req.path);
 
-    // get the file from the storage
-    try {
-        const objStream = await minioClient.getObject(bucketName, filePath);
+  // to add-get bucket name form the locations
+  const bucketName = "amazon";
+  const fileId = id === "root" ? "index.html" : id;
+  const fileName = !fileId ? "index.html" : fileId;
+  const filePath = `${req.hostname.split(".")[0]}/dist/${fileName}`;
+  console.log("Requested file path:", filePath);
+  if (res.headersSent) {
+    console.log("Headers already sent!");
+  }
+  // get the file from the storage
+  try {
+    const objStream = await minioClient.getObject(bucketName, filePath);
 
-        res.setHeader('Content-Type', `text/html`);
+    const ext = filePath.split(".").pop().toLowerCase();
+    const mimeTypes = {
+      html: "text/html",
+      js: "application/javascript",
+      css: "text/css",
+      json: "application/json",
+      png: "image/png",
+      jpg: "image/jpeg",
+      jpeg: "image/jpeg",
+      svg: "image/svg+xml",
+      ico: "image/x-icon",
+    };
+    const contentType = mimeTypes[ext] || "application/octet-stream";
+    res.setHeader("Content-Type", contentType);
 
-        objStream.on('error', (err) => {
-            console.error('Stream Error:', err);
-            if (!res.headersSent) res.status(500).send('Error while streaming file');
-        })
+    objStream.on("error", (err) => {
+      console.error("Stream Error:", err);
+      if (!res.headersSent) {
+        return res.status(500).send("Error while streaming file");
+      }
+    });
 
-        objStream.pipe(res);
+    objStream.pipe(res);
 
-        console.log(`Serving file ${filePath} from bucket ${bucketName}`);
-    } catch (err) {
-        console.error('Error fetching file:', err);
-        res.status(404).send('File not found');
-    }
+    console.log(`Serving file ${filePath} from bucket ${bucketName}`);
+  } catch (err) {
+    console.error("Error fetching file:", err);
+    return res.status(404).send("File not found");
+  }
 });
-
 
 module.exports = router;

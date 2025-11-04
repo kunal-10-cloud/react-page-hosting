@@ -16,6 +16,7 @@
     "@azure/identity": "^4.13.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "minio": "^8.0.6"
+    "minio": "^8.0.6",
+    "path-to-regexp": "^6.2.1"
   }
 }
