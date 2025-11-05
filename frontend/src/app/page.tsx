@@ -1,17 +1,11 @@
-"use client";
+"use client"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Github, Rocket, Terminal, ExternalLink, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 
-// Simulated socket connection (replace with actual socket.io in production)
-const mockSocket = {
-  on: (event: string, callback: Function) => {},
-  off: (event: string, callback: Function) => {},
-  emit: (event: string, data: string) => {}
-};
-
-export default function DeploymentPlatform() {
+export default function staticNewPage() {
   const [repoURL, setRepoURL] = useState<string>("");
   const [logs, setLogs] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -37,14 +31,14 @@ export default function DeploymentPlatform() {
     
     try {
       // Simulated deployment - replace with actual API call
-      // const { data } = await axios.post(`http://localhost:9000/project`, {
-      //   gitURL: repoURL,
-      //   slug: projectId,
-      // });
-      
+      const { data } = await axios.post(`https://ripe-hornets-attack.loca.lt/deploy`, {
+        gitURL: repoURL
+      });
+      // slug: projectId,
+      console.log(data)
       // Mock deployment process
       const mockProjectSlug = `project-${Date.now()}`;
-      const mockURL = `https://${mockProjectSlug}.deploy.app`;
+      const mockURL = `https://${data.data.projectSlug}.ripe-hornets-attack.loca.lt/`;
       
       setProjectId(mockProjectSlug);
       
@@ -90,7 +84,7 @@ export default function DeploymentPlatform() {
             <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-3 rounded-2xl shadow-lg">
               <Rocket className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-white">DeployFlow</h1>
+            <h1 className="text-4xl font-bold text-white">DeployDash</h1>
           </div>
           <p className="text-slate-300 text-lg">Deploy your GitHub repositories instantly</p>
         </div>
@@ -227,7 +221,7 @@ export default function DeploymentPlatform() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-slate-400 text-sm">
-          <p>Built with ❤️ for developers who ship fast</p>
+          <p>❤️ @pandaincode</p>
         </div>
       </div>
     </main>

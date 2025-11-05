@@ -6,7 +6,7 @@ git clone --depth=1 "$REPO_URL" repo
 cd repo 
 
 echo "#step-2 \t installing dependencies"
-npm install --legacy-peer-deps
+npm install 
 
 echo "#step-3 \t Building project"
 npm run build
@@ -19,5 +19,4 @@ mc mb -p minio/$BUCKET_NAME || echo "Bucket $BUCKET_NAME already exists, skippin
 # upload the build
 mc cp -r ./dist minio/$BUCKET_NAME/$JOB_ID/
 
-echo "#step-5 \t Build completed, your site is live at $STORAGE_URL/$BUCKET_NAME/$JOB_ID"
 echo "#step-6 \t Cleaning up => exiting"
