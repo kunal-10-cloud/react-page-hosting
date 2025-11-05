@@ -1,6 +1,7 @@
 // libraries
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 
 const port = 7830
 const app = express();
@@ -11,6 +12,12 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   next();
 });
+
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // routes   
 const deployRoute = require("./routes/deploy.js");
