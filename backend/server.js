@@ -1,9 +1,15 @@
 // libraries
 const express = require("express");
+
+const {
+  getSystemInfo,
+  checkDockerInstalled,
+} = require("./utils/systemUtils.js");
+
 require("dotenv").config();
 const cors = require("cors");
 
-const port = 7830
+const port = 7830;
 const app = express();
 
 // middleware
@@ -13,43 +19,83 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-// routes   
+// routes
 const deployRoute = require("./routes/deploy.js");
 const viewRoute = require("./routes/view.js");
-
 
 // mount routes
 app.use("/deploy", deployRoute);
 // app.use("/view", viewRoute);
 app.use((req, res, next) => {
-  console.log("Subdomains:", req.subdomains, req.get('host') , req.hostname);
+  console.log("Subdomains:", req.subdomains, req.get("host"), req.hostname);
   const hostname = req.hostname;
-  const subdomain = hostname.split('.')[0]
-  // task :- logic for checking the subdomain existing in the storage can be done either 
+  const subdomain = hostname.split(".")[0];
+  // task :- logic for checking the subdomain existing in the storage can be done either
   // here or in the view route itself
-  if (subdomain && subdomain !== 'localhost') {
-    console.log("hi")
+  if (subdomain && subdomain !== "localhost") {
+    console.log("hi");
     viewRoute(req, res, next);
-  } else{
-    next()
+  } else {
+    next();
   }
 });
 
-app.get("/health", (req , res) => {
-  res.status(200).send("Server is healthy");
-})
+app.get("/health", (req, res) => {
+  let systemInfo = {};
+  const promise = {
+    sysInfo: new Promise((resolve, reject) => {
+      getSystemInfo((err, info) => {
+        if (err) {
+          console.error("Error fetching system info:", err);
+          return reject(new Error("Unable to fetch system info"));
+        } else {
+          systemInfo.info = info;
+          resolve();
+        }
+      });
+    }),
+    dockerCheck: new Promise((resolve, reject) => {
+      checkDockerInstalled((err, dockerVersion) => {
+        if (err) {
+          console.error("Docker check error:", err);
+          return reject(
+            new Error("Docker is not installed or not found in PATH.")
+          );
+        } else {
+          systemInfo.dockerVersion = dockerVersion;
+          resolve();
+        }
+      });
+    }),
+  };
 
-app.listen(port, (err) => {
-    if (err) {
-        console.error("Error starting server:", err);
-        return;
-    }
-    console.log(`Server is running on port http://localhost:${port}`);
+  Promise.all([promise.sysInfo, promise.dockerCheck])
+    .then(() => {
+      res.status(200).json({
+        status: "OK",
+        systemInfo: systemInfo,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        status: "ERROR",
+        message: error.message,
+      });
+    });
 });
 
+app.listen(port, (err) => {
+  if (err) {
+    console.error("Error starting server:", err);
+    return;
+  }
+  console.log(`Server is running on port http://localhost:${port}`);
+});
