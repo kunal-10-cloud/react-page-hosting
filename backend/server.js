@@ -1,24 +1,31 @@
 // libraries
 const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser")
+const { getSystemInfo, checkDockerInstalled,} = require("./utils/systemUtils.js");
 
-const {
-  getSystemInfo,
-  checkDockerInstalled,
-} = require("./utils/systemUtils.js");
+const { authUser } = require("./middlewares/auth.js")
 
 require("dotenv").config();
-const cors = require("cors");
 
 const port = 7830;
 const app = express();
 
+// connect to MongoDB
+const connectDB = async () => {
+  try {
+    await mongoose.connect("mongodb://localhost:27017/deployDash");
+    console.log("MongoDB connected successfully");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  }
+};
+connectDB();
+
 // middleware
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-  next();
-});
-
 app.use(
   cors({
     origin: "*",
@@ -26,13 +33,21 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
+});
+app.use(cookieParser())
 
 // routes
 const deployRoute = require("./routes/deploy.js");
 const viewRoute = require("./routes/view.js");
+const userRoute = require("./routes/user.js");
 
 // mount routes
-app.use("/deploy", deployRoute);
+app.use("/deploy", authUser ,deployRoute);
+app.use("/user", userRoute);
+
 // app.use("/view", viewRoute);
 app.use((req, res, next) => {
   console.log("Subdomains:", req.subdomains, req.get("host"), req.hostname);
