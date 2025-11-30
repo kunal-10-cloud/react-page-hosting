@@ -76,21 +76,26 @@ export default function staticNewPage() {
   }, [logs]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl">
+    <main className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      {/* Decorative background blobs (borrowed from beta) */}
+      <div className="absolute top-0 left-1/4 w-72 h-72 bg-[#0C7C59] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+      <div className="absolute top-1/3 right-1/6 w-80 h-80 bg-[#441FFF] rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2000" />
+      <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-[#DD1155] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000" />
+
+      <div className="w-full max-w-4xl relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-3 rounded-2xl shadow-lg">
+            <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-3 rounded-2xl shadow-2xl transform -rotate-6">
               <Rocket className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-white">DeployDash</h1>
+            <h1 className="text-4xl font-extrabold text-white tracking-tight">DeployDash</h1>
           </div>
-          <p className="text-slate-300 text-lg">Deploy your GitHub repositories instantly</p>
+          <p className="text-slate-300 text-lg">Deploy your GitHub repositories instantly — fast, simple, delightful.</p>
         </div>
 
         {/* Main Card */}
-        <div className="bg-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 overflow-hidden">
+  <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/40 overflow-hidden ring-1 ring-white/5">
           {/* Input Section */}
           <div className="p-8">
             <label className="block text-sm font-medium text-slate-300 mb-3">
@@ -117,7 +122,7 @@ export default function staticNewPage() {
               <Button
                 onClick={handleClickDeploy}
                 disabled={!isValidURL.valid || loading}
-                className="h-14 px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="h-14 px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {loading ? (
                   <>
