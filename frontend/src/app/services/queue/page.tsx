@@ -1,12 +1,12 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LandingPage } from "@/components/LandingPage";
+import { MessageQueue } from "@/components/services/MessageQueue";
 
-export default function Home() {
+export default function QueuePage() {
   return (
     <>
       <Header />
-      <LandingPage />
+      <MessageQueue />
       <Footer />
     </>
   );

@@ -1,12 +1,12 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LandingPage } from "@/components/LandingPage";
+import { CronJobs } from "@/components/services/CronJobs";
 
-export default function Home() {
+export default function CronJobsPage() {
   return (
     <>
       <Header />
-      <LandingPage />
+      <CronJobs />
       <Footer />
     </>
   );

@@ -1,12 +1,12 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LandingPage } from "@/components/LandingPage";
+import { BackendServices } from "@/components/services/BackendServices";
 
-export default function Home() {
+export default function BackendServicesPage() {
   return (
     <>
       <Header />
-      <LandingPage />
+      <BackendServices />
       <Footer />
     </>
   );
