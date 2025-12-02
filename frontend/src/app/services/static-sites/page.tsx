@@ -1,12 +1,12 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LandingPage } from "@/components/LandingPage";
+import { StaticSites } from "@/components/services/StaticSites";
 
-export default function Home() {
+export default function StaticSitesPage() {
   return (
     <>
       <Header />
-      <LandingPage />
+      <StaticSites />
       <Footer />
     </>
   );
