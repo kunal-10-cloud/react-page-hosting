@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Badge3D } from "../Badge3D";
 import { Sticker } from "../Sticker";

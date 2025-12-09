@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -63,11 +65,10 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setProjectType("frontend")}
-                className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${
-                  projectType === "frontend"
+                className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${projectType === "frontend"
                     ? "border-primary bg-primary/5"
                     : "border-border hover:border-primary/50"
-                }`}
+                  }`}
               >
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Globe className="w-5 h-5 text-primary" />
@@ -80,11 +81,10 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
 
               <button
                 onClick={() => setProjectType("backend")}
-                className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${
-                  projectType === "backend"
+                className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${projectType === "backend"
                     ? "border-secondary bg-secondary/5"
                     : "border-border hover:border-secondary/50"
-                }`}
+                  }`}
               >
                 <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
                   <Server className="w-5 h-5 text-secondary" />

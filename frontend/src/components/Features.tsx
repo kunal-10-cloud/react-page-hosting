@@ -1,10 +1,10 @@
-import { 
-  Zap, 
-  Globe, 
-  Server, 
-  Lock, 
-  GitBranch, 
-  Gauge 
+import {
+  Zap,
+  Globe,
+  Server,
+  Lock,
+  GitBranch,
+  Gauge
 } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Sticker } from "./Sticker";
@@ -75,8 +75,8 @@ export function Features() {
             All the products you <span className="doodle-underline">need</span> ✨
           </h2>
           <p className="text-muted-foreground text-lg">
-            Everything you need to ship faster. From instant deployments to global CDN, 
-            we've got you covered at every stage of development. 🎯
+            Everything you need to ship faster. From instant deployments to global CDN,
+            we&apos;ve got you covered at every stage of development. 🎯
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export function Features() {
                 Deploy anywhere, <span className="doodle-underline">instantly</span> 🚀
               </h3>
               <p className="text-muted-foreground mb-6">
-                Connect your GitHub repository and deploy automatically on every push. 
+                Connect your GitHub repository and deploy automatically on every push.
                 Our intelligent build system detects your framework and optimizes the deployment.
               </p>
               <ul className="space-y-3">

@@ -1,5 +1,5 @@
 import { Sticker } from "./Sticker";
-import { Zap, TrendingUp, Globe } from "lucide-react";
+import { Zap, TrendingUp } from "lucide-react";
 
 export function Stats() {
   const stats = [
@@ -31,15 +31,15 @@ export function Stats() {
             Speed included. <span className="doodle-underline">Downtime not included.</span> ⚡
           </h2>
           <p className="text-sidebar-foreground/70 text-lg">
-            Built on enterprise-grade infrastructure with 99.99% uptime and millisecond-fast 
+            Built on enterprise-grade infrastructure with 99.99% uptime and millisecond-fast
             response times across the globe. 🌟
           </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="text-center bg-sidebar-accent border-2 border-sidebar-border rounded-2xl p-6 transform hover:scale-105 transition-all hover:-rotate-2 shadow-xl"
             >
               <div className="text-3xl md:text-5xl mb-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
@@ -59,7 +59,7 @@ export function Stats() {
             { title: "Instant rollback", desc: "Made a mistake? Roll back to any previous deployment with one click.", emoji: "⏮️" },
             { title: "Live collaboration", desc: "Work together with your team in real-time on deployments and configs.", emoji: "👥" }
           ].map((item, index) => (
-            <div 
+            <div
               key={index}
               className="bg-sidebar-accent border-2 border-accent/30 rounded-2xl p-8 transform hover:scale-105 transition-all shadow-xl"
               style={{ transform: `rotate(${index % 2 === 0 ? -1 : 1}deg)` }}

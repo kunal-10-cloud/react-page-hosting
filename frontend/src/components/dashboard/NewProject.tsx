@@ -1,9 +1,10 @@
+"use client";
+
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 import { Sticker } from "../Sticker";
 import {
   Globe,
@@ -33,7 +34,7 @@ interface EnvVar {
 }
 
 export function NewProject() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [serviceType, setServiceType] = useState<ServiceType | null>(null);
   const [gitUrl, setGitUrl] = useState("");
@@ -125,7 +126,7 @@ export function NewProject() {
       outputDir,
       envVars,
     });
-    navigate("/dashboard");
+    router.push("/dashboard");
   };
 
   return (
@@ -147,7 +148,7 @@ export function NewProject() {
           <div className="mb-8">
             <Button
               variant="ghost"
-              onClick={() => (step === 1 ? navigate("/dashboard") : setStep(step - 1))}
+              onClick={() => (step === 1 ? router.push("/dashboard") : setStep(step - 1))}
               className="mb-4"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -185,22 +186,20 @@ export function NewProject() {
                         setServiceType(service.type);
                         setStep(2);
                       }}
-                      className={`bg-card border-2 rounded-2xl p-6 text-left hover:shadow-xl transition-all transform hover:scale-105 ${
-                        isSelected ? "border-primary shadow-xl" : "border-border"
-                      }`}
+                      className={`bg-card border-2 rounded-2xl p-6 text-left hover:shadow-xl transition-all transform hover:scale-105 ${isSelected ? "border-primary shadow-xl" : "border-border"
+                        }`}
                       style={{
                         transform: `rotate(${index % 2 === 0 ? -0.5 : 0.5}deg)`,
                       }}
                     >
                       <div className="flex items-start gap-3 mb-4">
                         <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 ${
-                            service.color === "primary"
-                              ? "bg-primary/10 border-primary/30"
-                              : service.color === "secondary"
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 ${service.color === "primary"
+                            ? "bg-primary/10 border-primary/30"
+                            : service.color === "secondary"
                               ? "bg-secondary/10 border-secondary/30"
                               : "bg-destructive/10 border-destructive/30"
-                          }`}
+                            }`}
                         >
                           <Icon className="w-6 h-6" />
                         </div>

@@ -48,7 +48,7 @@ export function Testimonials() {
             <div
               key={index}
               className="bg-card border-2 rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-              style={{ 
+              style={{
                 transform: `rotate(${index % 2 === 0 ? -0.5 : 0.5}deg)`,
                 borderColor: `${testimonial.color}40`,
                 boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
@@ -56,10 +56,10 @@ export function Testimonials() {
             >
               <Quote className="w-10 h-10 mb-4" style={{ color: `${testimonial.color}40` }} />
               <p className="mb-6 text-muted-foreground italic">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <div 
+                <div
                   className="w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-background font-medium"
                   style={{ background: testimonial.color }}
                 >

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "./ui/button";
 import { Sticker } from "./Sticker";
 import { Badge3D } from "./Badge3D";
@@ -110,11 +110,11 @@ export function Documentation() {
               <BookOpen className="w-4 h-4" />
               <span>Documentation</span>
             </div>
-            
+
             <h1 className="text-4xl md:text-6xl mb-6">
               Everything you need to <span className="doodle-underline text-primary">deploy</span> 🚀
             </h1>
-            
+
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
               Complete guides, tutorials, and API references to help you ship faster. ✨
             </p>
@@ -172,7 +172,7 @@ export function Documentation() {
             </div>
 
             <div className="mt-8 text-center">
-              <p className="text-muted-foreground mb-4">That's it! Your app is live! 🎉</p>
+              <p className="text-muted-foreground mb-4">That&apos;s it! Your app is live! 🎉</p>
               <Button className="shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
                 View Full Tutorial
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -244,7 +244,7 @@ export function Documentation() {
           <div className="max-w-3xl mx-auto">
             <div className="bg-gradient-to-br from-primary via-secondary to-primary rounded-3xl p-12 text-center border-4 border-primary/30 shadow-2xl transform hover:rotate-0 transition-transform" style={{ transform: 'rotate(-0.5deg)' }}>
               <h2 className="text-primary-foreground mb-4">
-                Need help? We're here! 💜
+                Need help? We&apos;re here! 💜
               </h2>
               <p className="text-primary-foreground/90 mb-8">
                 Join our community Discord or reach out to our support team

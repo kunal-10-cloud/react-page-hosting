@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { ArrowRight, Github, Twitter, Linkedin, Sparkles, Rocket, Heart, Star, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Rocket, Heart, Star } from "lucide-react";
 import { Sticker } from "./Sticker";
 import { Badge3D } from "./Badge3D";
 
@@ -38,7 +38,7 @@ export function Hero() {
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl !leading-tight">
-            The <span className="doodle-underline text-primary">developers'</span> cloud.
+            The <span className="doodle-underline text-primary">developers&apos;</span> cloud.
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -74,7 +74,7 @@ export function Hero() {
                 <div
                   key={i}
                   className="w-12 h-12 rounded-full border-4 border-background shadow-lg transform hover:scale-110 transition-transform"
-                  style={{ 
+                  style={{
                     background: `linear-gradient(135deg, ${colors.color1}, ${colors.color2})`
                   }}
                 />

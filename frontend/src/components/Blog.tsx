@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
 import { Sticker } from "./Sticker";

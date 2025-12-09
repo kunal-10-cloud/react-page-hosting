@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { Zap, Menu, X, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +14,6 @@ import {
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
 
   const services = [
     { name: "Static Sites", path: "/services/static-sites", emoji: "🌐" },
@@ -48,11 +46,11 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a
+            <Link
               href="/#features"
               className="text-sm hover:text-primary transition-colors relative group cursor-pointer"
               onClick={(e) => {
-                if (location.pathname === '/') {
+                if (typeof window !== 'undefined' && window.location.pathname === '/') {
                   e.preventDefault();
                   scrollToSection('features');
                 }
@@ -60,7 +58,7 @@ export function Header() {
             >
               Features
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all"></span>
-            </a>
+            </Link>
 
             {/* Services Dropdown */}
             <DropdownMenu>
@@ -80,11 +78,11 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <a
+            <Link
               href="/#pricing"
               className="text-sm hover:text-primary transition-colors relative group cursor-pointer"
               onClick={(e) => {
-                if (location.pathname === '/') {
+                if (typeof window !== 'undefined' && window.location.pathname === '/') {
                   e.preventDefault();
                   scrollToSection('pricing');
                 }
@@ -92,7 +90,7 @@ export function Header() {
             >
               Pricing
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all"></span>
-            </a>
+            </Link>
 
             <Link
               href="/blog"
@@ -143,11 +141,11 @@ export function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-4 mb-4">
-              <a
+              <Link
                 href="/#features"
                 className="text-sm hover:text-primary transition-colors px-2 py-1"
                 onClick={(e) => {
-                  if (location.pathname === '/') {
+                  if (typeof window !== 'undefined' && window.location.pathname === '/') {
                     e.preventDefault();
                     scrollToSection('features');
                   }
@@ -155,7 +153,7 @@ export function Header() {
                 }}
               >
                 Features
-              </a>
+              </Link>
 
               {/* Services in Mobile */}
               <div className="px-2 py-1">
@@ -175,11 +173,11 @@ export function Header() {
                 </div>
               </div>
 
-              <a
+              <Link
                 href="/#pricing"
                 className="text-sm hover:text-primary transition-colors px-2 py-1"
                 onClick={(e) => {
-                  if (location.pathname === '/') {
+                  if (typeof window !== 'undefined' && window.location.pathname === '/') {
                     e.preventDefault();
                     scrollToSection('pricing');
                   }
@@ -187,7 +185,7 @@ export function Header() {
                 }}
               >
                 Pricing
-              </a>
+              </Link>
 
               <Link
                 href="/blog"

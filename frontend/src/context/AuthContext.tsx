@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 withCredentials: true,
             });
             setUser(response.data.user);
-        } catch (error) {
+        } catch {
             setUser(null);
         } finally {
             setLoading(false);

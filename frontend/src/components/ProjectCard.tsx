@@ -1,15 +1,17 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { 
-  Globe, 
-  Server, 
-  Play, 
-  Settings, 
-  Activity, 
+import {
+  Globe,
+  Server,
+  Play,
+  Settings,
+  Activity,
   Clock,
   ExternalLink,
-  MoreVertical 
+  MoreVertical
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -39,7 +41,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, onDeploy }: ProjectCardProps) {
   const [selectedEnv, setSelectedEnv] = useState<"development" | "production">("development");
-  
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
@@ -68,9 +70,8 @@ export function ProjectCard({ project, onDeploy }: ProjectCardProps) {
     <div className="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:border-primary/50">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-            project.type === "frontend" ? "bg-primary/10" : "bg-secondary/10"
-          }`}>
+          <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${project.type === "frontend" ? "bg-primary/10" : "bg-secondary/10"
+            }`}>
             {project.type === "frontend" ? (
               <Globe className="w-6 h-6 text-primary" />
             ) : (
@@ -107,21 +108,19 @@ export function ProjectCard({ project, onDeploy }: ProjectCardProps) {
         <div className="flex gap-2 bg-muted/50 rounded-lg p-1">
           <button
             onClick={() => setSelectedEnv("development")}
-            className={`flex-1 px-3 py-2 rounded-md transition-all ${
-              selectedEnv === "development"
+            className={`flex-1 px-3 py-2 rounded-md transition-all ${selectedEnv === "development"
                 ? "bg-card shadow-sm"
                 : "hover:bg-card/50"
-            }`}
+              }`}
           >
             Development
           </button>
           <button
             onClick={() => setSelectedEnv("production")}
-            className={`flex-1 px-3 py-2 rounded-md transition-all ${
-              selectedEnv === "production"
+            className={`flex-1 px-3 py-2 rounded-md transition-all ${selectedEnv === "production"
                 ? "bg-card shadow-sm"
                 : "hover:bg-card/50"
-            }`}
+              }`}
           >
             Production
           </button>
@@ -166,8 +165,8 @@ export function ProjectCard({ project, onDeploy }: ProjectCardProps) {
                   {deployment.status === "deploying"
                     ? "Deploying..."
                     : deployment.status === "active"
-                    ? "Redeploy"
-                    : "Deploy"}
+                      ? "Redeploy"
+                      : "Deploy"}
                 </Button>
               </div>
             );

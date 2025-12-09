@@ -27,7 +27,7 @@ export function Footer() {
               <span>DeployHub</span>
             </div>
             <p className="text-sm text-sidebar-foreground/70 mb-4">
-              The developers' cloud platform for instant deployments. ✨
+              The developers&apos; cloud platform for instant deployments. ✨
             </p>
             <div className="flex items-center gap-3">
               <a
