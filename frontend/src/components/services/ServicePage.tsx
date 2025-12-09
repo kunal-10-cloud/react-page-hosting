@@ -76,13 +76,13 @@ export function ServicePage({
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/dashboard/new-project">
+              <Link href="/dashboard/new-project">
                 <Button size="lg" className="gap-2 text-lg px-8 h-12 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
                   Get Started Free
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Link to="/docs">
+              <Link href="/docs">
                 <Button size="lg" variant="outline" className="text-lg px-8 h-12 border-2 shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
                   View Documentation
                 </Button>
@@ -167,7 +167,7 @@ export function ServicePage({
                 <Badge3D text="Starter" color="primary" rotation={-2} />
                 <div className="text-4xl my-4">{pricing.starter}</div>
                 <p className="text-muted-foreground mb-6">Perfect for getting started</p>
-                <Link to="/dashboard/new-project">
+                <Link href="/dashboard/new-project">
                   <Button className="w-full">Get Started</Button>
                 </Link>
               </div>
@@ -176,7 +176,7 @@ export function ServicePage({
                 <Badge3D text="Pro" color="secondary" rotation={2} />
                 <div className="text-4xl my-4">{pricing.pro}</div>
                 <p className="text-muted-foreground mb-6">For production workloads</p>
-                <Link to="/dashboard/new-project">
+                <Link href="/dashboard/new-project">
                   <Button className="w-full bg-secondary hover:bg-secondary/90">Get Started</Button>
                 </Link>
               </div>
@@ -196,7 +196,7 @@ export function ServicePage({
               <p className="text-primary-foreground/90 mb-8">
                 Start your first deployment in under 60 seconds
               </p>
-              <Link to="/dashboard/new-project">
+              <Link href="/dashboard/new-project">
                 <Button className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
                   Deploy Now
                   <ArrowRight className="w-5 h-5 ml-2" />

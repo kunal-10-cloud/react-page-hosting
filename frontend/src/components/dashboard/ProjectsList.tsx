@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
@@ -73,7 +73,7 @@ export function ProjectsList() {
               Manage and deploy your applications
             </p>
           </div>
-          <Link to="/dashboard/new-project">
+          <Link href="/dashboard/new-project">
             <Button className="gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
               <Plus className="w-5 h-5" />
               New Project
@@ -102,7 +102,7 @@ export function ProjectsList() {
             <p className="text-muted-foreground mb-6">
               Create your first project to get started
             </p>
-            <Link to="/dashboard/new-project">
+            <Link href="/dashboard/new-project">
               <Button className="gap-2">
                 <Plus className="w-5 h-5" />
                 Create Project
@@ -122,11 +122,10 @@ export function ProjectsList() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
                     <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 ${
-                        project.type === "frontend"
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 ${project.type === "frontend"
                           ? "bg-primary/10 border-primary/30"
                           : "bg-secondary/10 border-secondary/30"
-                      }`}
+                        }`}
                     >
                       {project.type === "frontend" ? (
                         <Globe className="w-6 h-6 text-primary" />
@@ -144,8 +143,8 @@ export function ProjectsList() {
                             project.status === "active"
                               ? "bg-secondary/10 text-secondary border-secondary/30"
                               : project.status === "building"
-                              ? "bg-accent/10 text-accent-foreground border-accent/30"
-                              : "bg-destructive/10 text-destructive border-destructive/30"
+                                ? "bg-accent/10 text-accent-foreground border-accent/30"
+                                : "bg-destructive/10 text-destructive border-destructive/30"
                           }
                         >
                           {project.status}

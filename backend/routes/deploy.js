@@ -11,7 +11,7 @@ const subscriptionId = process.env.AZURE_SUBSCRIPTION_ID;
 const resourceGroup = process.env.AZURE_RESOURCE_GROUP;
 const jobName = process.env.AZURE_JOB_NAME_DEPLOY;
 let client
-if (RUN_ENV == "production") {
+if (RUN_ENV === "production" && subscriptionId) {
   client = new ContainerAppsAPIClient(new DefaultAzureCredential(), subscriptionId);
 }
 

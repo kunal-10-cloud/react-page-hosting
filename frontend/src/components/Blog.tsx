@@ -160,7 +160,7 @@ export function Blog() {
               {filteredPosts.map((post, index) => (
                 <Link
                   key={post.id}
-                  to={`/blog/${post.id}`}
+                  href={`/blog/${post.id}`}
                   className="group"
                 >
                   <article

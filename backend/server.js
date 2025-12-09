@@ -28,9 +28,10 @@ connectDB();
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002"], // Add likely frontend ports
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 app.use((req, res, next) => {

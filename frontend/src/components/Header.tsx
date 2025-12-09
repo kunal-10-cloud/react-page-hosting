@@ -1,8 +1,11 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Zap, Menu, X, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +15,7 @@ import {
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
   const services = [
     { name: "Static Sites", path: "/services/static-sites", emoji: "🌐" },
@@ -36,7 +39,7 @@ export function Header() {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 transform hover:scale-105 transition-transform">
+          <Link href="/" className="flex items-center gap-2 transform hover:scale-105 transition-transform">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg border-2 border-white/30">
               <Zap className="w-6 h-6 text-primary-foreground" />
             </div>
@@ -68,7 +71,7 @@ export function Header() {
               <DropdownMenuContent className="w-64">
                 {services.map((service) => (
                   <DropdownMenuItem key={service.path} asChild>
-                    <Link to={service.path} className="flex items-center gap-2 cursor-pointer">
+                    <Link href={service.path} className="flex items-center gap-2 cursor-pointer">
                       <span className="text-lg">{service.emoji}</span>
                       <span>{service.name}</span>
                     </Link>
@@ -92,7 +95,7 @@ export function Header() {
             </a>
 
             <Link
-              to="/blog"
+              href="/blog"
               className="text-sm hover:text-primary transition-colors relative group"
             >
               Blog
@@ -100,7 +103,7 @@ export function Header() {
             </Link>
 
             <Link
-              to="/docs"
+              href="/docs"
               className="text-sm hover:text-primary transition-colors relative group"
             >
               Docs
@@ -111,12 +114,12 @@ export function Header() {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
-            <Link to="/signin">
+            <Link href="/signin">
               <Button variant="ghost" className="hover:scale-105 transition-transform">
                 Sign In
               </Button>
             </Link>
-            <Link to="/signup">
+            <Link href="/signup">
               <Button className="shadow-lg hover:shadow-xl hover:scale-105 transition-all">
                 Get Started 🚀
               </Button>
@@ -161,7 +164,7 @@ export function Header() {
                   {services.map((service) => (
                     <Link
                       key={service.path}
-                      to={service.path}
+                      href={service.path}
                       className="text-sm hover:text-primary transition-colors flex items-center gap-2"
                       onClick={() => setMobileMenuOpen(false)}
                     >
@@ -187,7 +190,7 @@ export function Header() {
               </a>
 
               <Link
-                to="/blog"
+                href="/blog"
                 className="text-sm hover:text-primary transition-colors px-2 py-1"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -195,7 +198,7 @@ export function Header() {
               </Link>
 
               <Link
-                to="/docs"
+                href="/docs"
                 className="text-sm hover:text-primary transition-colors px-2 py-1"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -206,12 +209,12 @@ export function Header() {
               <div className="flex justify-center mb-2">
                 <ThemeToggle />
               </div>
-              <Link to="/signin" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/signin" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="ghost" className="w-full">
                   Sign In
                 </Button>
               </Link>
-              <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full shadow-lg">Get Started 🚀</Button>
               </Link>
             </div>

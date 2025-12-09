@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt")
-const {v4 : uuidv4} = require("uuid")
 const User = require("../models/user");
 const { setUser , getUser } = require("./auth")
 
@@ -38,15 +37,47 @@ async function handleUserSignup(req, res) {
 
 async function handleUserLogin(req, res) {
     const {email , password} = req.body;
-    const user = await User.findOne({email , password})
+    try {
+        const user = await User.findOne({email})
 
-    if (!user) res.status(404).json({message : "User not Found"})
+        if (!user) return res.status(404).json({message : "User not Found"})
 
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(401).json({message : "Invalid Credentials"})
 
-      const sessionId = uuidv4();
-      setUser(sessionId , user)
-      res.cookie("uid" , sessionId)
-    // to-do
-
+        const token = setUser(user);
+        res.cookie("uid", token, {
+            httpOnly: true, // Security best practice
+            secure: process.env.RUN_ENV === 'production', // Use secure in prod
+            sameSite: 'lax',
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        });
+        res.json({message: "Login Successful", user: {username: user.username, email: user.email}})
+    } catch (error) {
+        console.error("Error during user login:", error);
+        res.status(500).json({ error: "Internal server error." });
+    }
 }
-module.exports = {handleUserSignup,handleUserLogin,};
+
+async function handleUserProfile(req, res) {
+    if (!req.user) return res.status(401).json({ error: "Unauthorized" });
+    res.json({ user: req.user });
+}
+
+async function handleUserLogout(req, res) {
+    try {
+        // Clear the authentication cookie
+        res.clearCookie("uid", {
+            httpOnly: true,
+            secure: process.env.RUN_ENV === 'production',
+            sameSite: 'lax',
+            path: '/'
+        });
+        res.json({ message: "Logout successful" });
+    } catch (error) {
+        console.error("Error during logout:", error);
+        res.status(500).json({ error: "Internal server error." });
+    }
+}
+
+module.exports = {handleUserSignup, handleUserLogin, handleUserProfile, handleUserLogout};
